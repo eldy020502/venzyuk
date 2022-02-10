@@ -44,7 +44,7 @@ chat_watcher_group = 3
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
-        int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
+        int(x) * 180 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
 
@@ -53,10 +53,10 @@ async def musicdl(_, message: Message):
     await message.delete()
     chat_id = message.chat.id
     if not await is_served_chat(chat_id):
-        await message.reply(f"❌ **This chat not authorized !**\n\nI can't stream music in non-authorized chat, ask to sudo user to auth this chat.\n\nCheck the sudo user list [From Here](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
+        await message.reply(f"❌ **️Obrolan ini tidak diizinkan !**\n\nSaya tidak dapat mengalirkan musik dalam obrolan yang tidak resmi, minta pengguna sudo untuk mengautentikasi obrolan ini.\n\nPeriksa daftar pengguna Sudo [Dari Sini](https://t.me/{BOT_USERNAME}?start=sudolist)", disable_web_page_preview=True)
         return await app.leave_chat(chat_id)  
     if message.sender_chat:
-        return await message.reply_text("you're an __Anonymous__ Admin !\n\n» revert back to user account from admin rights.")  
+        return await message.reply_text("Anda adalah __Anonymous__ Admin !\n\n» kembali ke akun pengguna dari hak admin.")  
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
@@ -67,7 +67,7 @@ async def musicdl(_, message: Message):
     fucksemx = 0
     if url:
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Sabar Tod...**")
         ydl_opts = {"format": "bestaudio/best"}
         try:
             results = VideosSearch(query, limit=1)
@@ -80,27 +80,27 @@ async def musicdl(_, message: Message):
                 idxz = (result["id"])
                 videoid = (result["id"])
         except Exception as e:
-            return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")    
+            return await mystic.edit_text("😕 Maaf, kami **tidak dapat** menemukan lagu yang Anda cari\n\n• Periksa apakah **nama sudah benar** atau **coba cari artisnya.**")    
         smex = int(time_to_seconds(duration))
         if smex > DURATION_LIMIT:
-            return await mystic.edit_text(f"**__Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
+            return await mystic.edit_text(f"**__Kesalahan Durasi__**\n\n**Durasi yang Diizinkan: **180 minute(s)\n**Durasi yang Diterima:** {duration} minute(s)")
         if duration == "None":
-            return await mystic.edit_text("❌ **live stream not supported**")
+            return await mystic.edit_text("❌ **streaming langsung tidak didukung**")
         if views == "None":
-            return await mystic.edit_text("❌ **live stream not supported**")
+            return await mystic.edit_text("❌ **streaming langsung tidak didukung**")
         thumb = await down_thumb(thumbnail, user_id)
         buttons = gets(videoid, user_id)
         m = await message.reply_photo(
             photo=thumb,
             reply_markup=InlineKeyboardMarkup(buttons),    
-            caption=(f"🏷 <b>Name:</b> [{title[:65]}]({url})\n\n💡 [Check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+            caption=(f"🏷 <b>Judul:</b> [{title[:65]}]({url})\n\n💡 [Periksa informasi musik](https://t.me/{BOT_USERNAME}?start=info_{id})")
         )   
         os.remove(thumb)
     else:
         if len(message.command) < 2:
             await message.reply_text("**usage:**\n\n/song or /music [yt url/music name]")
         query = " ".join(message.command[1:])
-        mystic = await _.send_message(chat_id, "🔍 **Searching...**")
+        mystic = await _.send_message(chat_id, "🔍 **Sabar Tod...**")
         try:
             a = VideosSearch(query, limit=5)
             result = (a.result()).get("result")
@@ -120,12 +120,12 @@ async def musicdl(_, message: Message):
             ID4 = (result[3]["id"])
             ID5 = (result[4]["id"])
         except Exception as e:
-            return await mystic.edit_text("😕 Sorry, we **couldn't** find the song you were looking for\n\n• Check that the **name is correct** or **try by searching the artist.**")
+            return await mystic.edit_text("😕 Maaf, kami **tidak dapat** menemukan lagu yang Anda cari\n\n• Periksa apakah **nama sudah benar** atau **coba dengan mencari artisnya.**")
         thumb ="cache/results.png"
         link = "https://www.youtube.com/watch?v={id}"
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await mystic.edit(
-            f"• Choose the results to download !\n\n1️⃣ <b>[{title1[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n\n2️⃣ <b>[{title2[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n\n3️⃣ <b>[{title3[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n\n4️⃣ <b>[{title4[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n\n5️⃣ <b>[{title5[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})",
+            f"• ⚡Pilih Lagu Dibawah Ini Untuk Di Unduh⚡ !\n\n1️⃣ <b>[{title1[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n\n2️⃣ <b>[{title2[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n\n3️⃣ <b>[{title3[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n\n4️⃣ <b>[{title4[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n\n5️⃣ <b>[{title5[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID5})",
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
         )
@@ -142,11 +142,11 @@ async def download_data(_,CallbackQuery):
     try:
         id,duration,user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n\n**reason:** `{e}`")
+        return await CallbackQuery.message.edit(f"❌ kesalahan terjadi\n\n**alasan:** `{e}`")
     if duration == "None":
-        return await CallbackQuery.message.reply_text(f"❌ **live stream not supported**")      
+        return await CallbackQuery.message.reply_text(f"❌ **streaming langsung tidak didukung**")      
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
+        return await CallbackQuery.answer("🔥 maaf ini bukan permintaanmu", show_alert=True)
     await CallbackQuery.message.delete()
     checking = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     url = (f"https://www.youtube.com/watch?v={id}")
@@ -154,13 +154,13 @@ async def download_data(_,CallbackQuery):
     idx = id
     smex = int(time_to_seconds(duration))
     if smex > DURATION_LIMIT:
-        await CallbackQuery.message.reply_text(f"**❌ __Duration Error__**\n\n**Allowed Duration: **90 minute(s)\n**Received Duration:** {duration} minute(s)")
+        await CallbackQuery.message.reply_text(f"**❌ __Kesalahan Durasi__**\n\n**Durasi yang Diizinkan: **180 minute(s)\n**Durasi yang Diterima:** {duration} minute(s)")
         return 
     try:
         with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
             x = ytdl.extract_info(url, download=False)
     except Exception as e:
-        return await CallbackQuery.message.reply_text(f"failed to download this video.\n\n**reason:** `{e}`") 
+        return await CallbackQuery.message.reply_text(f"gagal mengunduh video ini.\n\n**alasan:** `{e}`") 
     title = (x["title"])
     thumbnail = (x["thumbnail"])
     idx = (x["id"])
@@ -170,7 +170,7 @@ async def download_data(_,CallbackQuery):
     m = await CallbackQuery.message.reply_photo(
         photo=thumb,
         reply_markup=InlineKeyboardMarkup(buttons),    
-        caption=(f"🏷 **Name:** [{title[:80]}]({url})\n\n💡 [Check music information](https://t.me/{BOT_USERNAME}?start=info_{id})")
+        caption=(f"🏷 **Judul:** [{title[:80]}]({url})\n\n💡 [Periksa informasi musik](https://t.me/{BOT_USERNAME}?start=info_{id})")
     )   
     os.remove(thumb)
     await CallbackQuery.message.delete()
@@ -185,9 +185,9 @@ async def chonga(_,CallbackQuery):
     try:
         id , query, user_id = callback_request.split("|") 
     except Exception as e:
-        return await CallbackQuery.message.edit(f"❌ an error occured\n**reason:** `{e}`")       
+        return await CallbackQuery.message.edit(f"❌ kesalahan terjadi\n**alasan:** `{e}`")       
     if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer("💡 sorry this is not your request", show_alert=True)
+        return await CallbackQuery.answer("🔥 maaf ini bukan permintaanmu", show_alert=True)
     i=int(id)
     query = str(query)
     try:
@@ -229,7 +229,7 @@ async def chonga(_,CallbackQuery):
         link = "https://www.youtube.com/watch?v={id}"
         buttons = search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, duration9, duration10 ,user_id, query)
         await CallbackQuery.edit_message_text(
-            f"• Choose the results to download !\n\n6️⃣ <b>[{title6[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID6})\n\n7️⃣ <b>[{title7[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID7})\n\n8️⃣ <b>[{title8[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID8})\n\n9️⃣ <b>[{title9[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID9})\n\n🔟 <b>[{title10[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID10})",    
+            f"• ⚡Pilih Lagu Dibawah Ini Untuk Di Unduh⚡ !\n\n6️⃣ <b>[{title6[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID6})\n\n7️⃣ <b>[{title7[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID7})\n\n8️⃣ <b>[{title8[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID8})\n\n9️⃣ <b>[{title9[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID9})\n\n🔟 <b>[{title10[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID10})",    
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
         )
@@ -238,7 +238,7 @@ async def chonga(_,CallbackQuery):
         link = "https://www.youtube.com/watch?v={id}"
         buttons = search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, duration4, duration5, user_id, query)
         await CallbackQuery.edit_message_text(
-            f"• Choose the results to download !\n\n1️⃣ <b>[{title1[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n\n2️⃣ <b>[{title2[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n\n3️⃣ <b>[{title3[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n\n4️⃣ <b>[{title4[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n\n5️⃣ <b>[{title5[:30]}...]({link})</b>\n └ 💡 [More information](https://t.me/{BOT_USERNAME}?start=info_{ID5})",    
+            f"• ⚡Pilih Lagu Dibawah Ini Untuk Di Unduh⚡ !\n\n1️⃣ <b>[{title1[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID1})\n\n2️⃣ <b>[{title2[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID2})\n\n3️⃣ <b>[{title3[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID3})\n\n4️⃣ <b>[{title4[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID4})\n\n5️⃣ <b>[{title5[:30]}...]({link})</b>\n └ 💡 [Informasi lebih lanjut](https://t.me/{BOT_USERNAME}?start=info_{ID5})",    
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True
         )
@@ -260,7 +260,7 @@ def search_markup(ID1, ID2, ID3, ID4, ID5, duration1, duration2, duration3, dura
                 InlineKeyboardButton(text="➡️", callback_data=f'chonga 1|{query}|{user_id}')
             ],
             [
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
+                InlineKeyboardButton(text="🔄Tutup", callback_data=f"ppcl2 smex|{user_id}")
             ],
         ]
     return buttons   
@@ -280,7 +280,7 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
                 InlineKeyboardButton(text="⬅️", callback_data=f'chonga 2|{query}|{user_id}')
             ],
             [
-                InlineKeyboardButton(text="🗑 Close", callback_data=f"ppcl2 smex|{user_id}")
+                InlineKeyboardButton(text="🔄Tutup", callback_data=f"ppcl2 smex|{user_id}")
             ],
         ]
     return buttons     
@@ -288,11 +288,11 @@ def search_markup2(ID6, ID7, ID8, ID9, ID10, duration6, duration7, duration8, du
 def gets(videoid, user_id):
     buttons= [
             [
-                InlineKeyboardButton(text="📥 Get Audio", callback_data=f'gets audio|{videoid}|{user_id}'),
-                InlineKeyboardButton(text="📥 Get Video", callback_data=f'gets video|{videoid}|{user_id}')
+                InlineKeyboardButton(text="⬇️Unduh Audio", callback_data=f'gets audio|{videoid}|{user_id}'),
+                InlineKeyboardButton(text="⬇️Unduh Vidio", callback_data=f'gets video|{videoid}|{user_id}')
             ],
             [
-                InlineKeyboardButton(text="🗑 Close", callback_data=f'close2')
+                InlineKeyboardButton(text="🔄Tutup", callback_data=f'close2')
             ],
         ]
     return buttons

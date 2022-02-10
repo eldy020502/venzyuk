@@ -73,10 +73,10 @@ async def on_stream_end(client: PyTgCalls, update: Update) -> None:
             f3 = (afk[2])
             finxx = (f"{f1}{f2}{f3}")
             if str(finxx) != "raw":  
-                mystic = await app.send_message(chat_id, "📥 downloading next music from playlist...")
+                mystic = await app.send_message(chat_id, "⬇️ mengunduh musik berikutnya dari daftar putar...")
                 url = (f"https://www.youtube.com/watch?v={afk}")
                 ctitle = (await app.get_chat(chat_id)).title
-                logger_text=f"""▶ playing music from playlist
+                logger_text=f"""▶ memutar musik dari daftar putar
 
 Group: `{chat_id}`
 Title: {ctitle}
@@ -87,7 +87,7 @@ Title: {ctitle}
                     with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
                         x = ytdl.extract_info(url, download=False)
                 except Exception as e:
-                    return await mystic.edit(f"failed to download this video.\n\n**reason:** {e}") 
+                    return await mystic.edit(f"gagal mengunduh video ini.\n\n**alasan:** {e}") 
                 
                 chat_title = ctitle                
                 videoid = afk
@@ -135,7 +135,7 @@ Title: {ctitle}
                     ),
                 )
                 thumbnail = (x["thumbnail"])
-                duration = convert_seconds(x["duration"] / 60)
+                duration = convert_seconds(x["duration"] / 180)
                 theme = random.choice(themes)
                 ctitle = await CHAT_TITLE(ctitle)
                 f2 = open(f'search/{afk}id.txt', 'r')        
@@ -149,7 +149,7 @@ Title: {ctitle}
                 await app.send_photo(chat_id,
                 photo=thumb,
                 reply_markup=InlineKeyboardMarkup(buttons),    
-                caption=(f"🗂 **Name:** [{title[:80]}]({url})\n⏱ **Duration:** `{duration}`\n🧸 **Request by:** {semx.mention}")
+                caption=(f"🗂 **Judul:** [{title[:80]}]({url})\n⏱ **Durasi:** `{duration}`\n😭 **Direquest Oleh:** {semx.mention}")
             )   
                 os.remove(thumb)
             else:      

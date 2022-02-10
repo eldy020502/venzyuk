@@ -38,17 +38,17 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton, InlineKeyboardM
 options = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "all","16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",]   
 
 
-@Client.on_message(command(["playlist", "playlist@VeezMegaBot"]) & other_filters)
+@Client.on_message(command(["playlist", "playlist@Venzastreambot"]) & other_filters)
 async def start_playlist_cmd(_, message):
     thumb ="cache/playlist.png"
     await message.reply_photo(
     photo=thumb, 
-    caption=("**❓ Which playlist do you want to play ?**"),    
+    caption=("**❓ Playlist mana yang ingin kamu mainkan ?**"),    
     reply_markup=play_list_keyboard) 
     return 
 
 
-@Client.on_message(command(["delmyplaylist", "delmyplaylist@VeezMegaBot"]) & other_filters)
+@Client.on_message(command(["delmyplaylist", "delmyplaylist@Venzastreambot"]) & other_filters)
 async def delmyplaylist(_, message):
     usage = ("usage:\n\n/delmyplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\n/delmyplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
@@ -59,11 +59,11 @@ async def delmyplaylist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 18:
-        return await message.reply_text(f"💡 **Confirmation** !!\n\nAre you sure want to delete your whole playlist ?", reply_markup=confirm_keyboard)
+        return await message.reply_text(f"💡 **Konfirmasi** !!\n\nApakah Anda yakin ingin menghapus seluruh daftar putar Anda? ?", reply_markup=confirm_keyboard)
     else:
          _playlist = await get_note_names(message.from_user.id)
     if not _playlist:
-        await message.reply_text("You not have playlist on database !")
+        await message.reply_text("Anda tidak memiliki daftar putar di database !")
     else:
         titlex = []
         j = 0
@@ -74,17 +74,17 @@ async def delmyplaylist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.from_user.id, note)
                 if deleted:
-                    return await message.reply_text(f"✅ Deleted the {count} music in playlist")
+                    return await message.reply_text(f"✅ Menghapus {count} musik di daftar putar")
                 else:
-                    return await message.reply_text("no such saved music in playlist !")                                
-        await message.reply_text("You not have such music in playlist !")                             
+                    return await message.reply_text("tidak ada musik yang disimpan dalam daftar putar !")                                
+        await message.reply_text("Anda tidak memiliki musik seperti itu di daftar putar !")                             
 
 
-@Client.on_message(command(["delchatplaylist", "delchatplaylist@VeezMegaBot"]) & other_filters)
+@Client.on_message(command(["delchatplaylist", "delchatplaylist@Venzstreambot"]) & other_filters)
 async def delchatplaylist(_, message):
     a = await app.get_chat_member(message.chat.id , message.from_user.id)
     if not a.can_manage_voice_chats:
-        return await message.reply_text("You're missing admin rights to use this command.\n\n» ❌ can_manage_voice_chats")
+        return await message.reply_text("Anda kehilangan hak admin untuk menggunakan perintah ini.\n\n» ❌ Dapat_Mengelola_Obrolan_Suara")
     usage = ("usage:\n\n/delchatplaylist [numbers between 1-30] (to delete a particular music in playlist)\n\n/delchatplaylist all (to delete whole playlist)")
     if len(message.command) < 2:
         return await message.reply_text(usage)
@@ -94,11 +94,11 @@ async def delchatplaylist(_, message):
     if name not in options:
         return await message.reply_text(usage)
     if len(message.text) == 21:
-        return await message.reply_text(f"💡 Confirmation !\n\nAre you sure want to delete your whole Group playlist ?", reply_markup=confirm_group_keyboard)
+        return await message.reply_text(f"💡 Konfirmasi !\n\nApakah Anda yakin ingin menghapus seluruh daftar putar Grup? ?", reply_markup=confirm_group_keyboard)
     else:
          _playlist = await get_note_names(message.chat.id)
     if not _playlist:
-        await message.reply_text("Group's has no playlist on database !")
+        await message.reply_text("Grup tidak memiliki daftar putar di basis data !")
     else:
         titlex = []
         j = 0
@@ -109,7 +109,7 @@ async def delchatplaylist(_, message):
             if j == count:
                 deleted = await delete_playlist(message.chat.id, note)
                 if deleted:
-                    return await message.reply_text(f"**✅ Deleted the {count} music in group's playlist**")
+                    return await message.reply_text(f"**✅ Menghapus {count} musik dalam daftar putar grup**")
                 else:
-                    return await message.reply_text(f"**no such saved music in group playlist !**")                                
-        await message.reply_text("You not have such music in Group's playlist !")
+                    return await message.reply_text(f"**tidak ada musik yang disimpan dalam daftar putar grup !**")                                
+        await message.reply_text("Anda tidak memiliki musik seperti itu di daftar putar Grup!")

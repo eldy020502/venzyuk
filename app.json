@@ -1,9 +1,9 @@
 {
-    "name": "Veez Mega Bot",
+    "name": "Venz-Music",
     "logo": "https://telegra.ph/file/e17ae80eefd44ab387aaf.jpg",
     "description": "Create your own bot to stream music trought the new Telegram video chat feature.",
     "keywords": ["music", "voice chat", "telegram"],
-    "repository": "https://github.com/levina-lab/YukkiMusic-Old",
+    "repository": "https://github.com/eldy020502/venzyuk",
     "stack": "container",
     "env": {
         "SESSION_NAME": {
